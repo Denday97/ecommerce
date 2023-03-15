@@ -3,14 +3,14 @@
 namespace App\Service;
 
 use Exception;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PictureService
 {
     private $params;
 
-    public function __construct(ParameterBag $params)
+    public function __construct(ParameterBagInterface $params)
     {
         $this->params = $params;
     }
@@ -18,7 +18,7 @@ class PictureService
     public function add(UploadedFile $picture, ?string $folder = '', ?int $width = 250, ?int $height = 250)
     {
         // on donne un nouveau nom à l'image
-        $fichier = md5(uniqid(rand(), true)) . 'webp';
+        $fichier = md5(uniqid(rand(), true)) . '.webp';
 
         // on va récupéré des infos de l'image
         $picture_infos = getimagesize($picture);
@@ -31,10 +31,10 @@ class PictureService
             case 'image/png';
                 $picture_source = imagecreatefrompng($picture);
                 break;
-            case 'image/png';
+            case 'image/jpeg';
                 $picture_source = imagecreatefromjpeg($picture);
                 break;
-            case 'image/png';
+            case 'image/webp';
                 $picture_source = imagecreatefromwebp($picture);
                 break;
             default:
@@ -51,12 +51,12 @@ class PictureService
                 $src_x = 0;
                 $src_y = ($imageheight - $squareSize) / 2;
                 break;
-            case 0: // portrait
+            case 0: // carré
                 $squareSize = $imageWidth;
                 $src_x = 0;
                 $src_y = 0;
                 break;
-            case 1: // portrait
+            case 1: // paysage
                 $squareSize = $imageheight;
                 $src_x = ($imageWidth - $squareSize) / 2;
                 $src_y = 0;
@@ -82,21 +82,25 @@ class PictureService
 
     public function delete(string $fichier, ?string $folder = '', ?int $width = 250, ?int $height = 250)
     {
-        if ($fichier !== 'default.webp') {
+        if($fichier !== 'default.webp'){
             $success = false;
-            $path = $this->params->get('image_directory' . $folder);
+            $path = $this->params->get('images_directory') . $folder;
+
             $mini = $path . '/mini/' . $width . 'x' . $height . '-' . $fichier;
-            if (file_exists($mini)) {
+
+            if(file_exists($mini)){
                 unlink($mini);
                 $success = true;
             }
+
             $original = $path . '/' . $fichier;
 
-            if (file_exists($original)) {
-                unlink($mini);
+            if(file_exists($original)){
+                unlink($original);
                 $success = true;
             }
             return $success;
         }
+        return false;
     }
 }
