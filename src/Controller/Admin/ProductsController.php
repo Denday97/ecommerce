@@ -58,8 +58,8 @@ class ProductsController extends AbstractController
         $product->setSlug($slug);
 
         // on arrondit le prix
-        $prix = $product->getPrice() * 100;
-        $product->setPrice($prix);
+        // $prix = $product->getPrice() * 100;
+        // $product->setPrice($prix);
 
         // on stock
         $em->persist($product);
@@ -82,8 +82,8 @@ class ProductsController extends AbstractController
         // on vérifie si l'utilisateur peut éditer avec le voter 
         $this->denyAccessUnlessGranted('PRODUCT_EDIT', $product);
         // on divise le prix
-        $prix = $product->getPrice() / 100;
-        $product->setPrice($prix);
+        // $prix = $product->getPrice() / 100;
+        // $product->setPrice($prix);
 
         // on crée le formulaire
         $productForm = $this->createForm(ProductsFormType::class, $product);
@@ -114,8 +114,8 @@ class ProductsController extends AbstractController
         $product->setSlug($slug);
 
         // on arrondit le prix
-        $prix = $product->getPrice() * 100;
-        $product->setPrice($prix);
+        // $prix = $product->getPrice() * 100;
+        // $product->setPrice($prix);
 
         // on stock
         $em->persist($product);
