@@ -52,7 +52,7 @@ class ProductsFormType extends AbstractType
             'multiple' => true,
             'mapped' => false,
             'required' => false,
-            'constaints'=> [
+            'constraints'=> [
                 new All(
                     new Image([
                         'maxWidth'=> 1280,
