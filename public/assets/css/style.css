@@ -1,0 +1,10 @@
+.bg-image {
+    padding: 60em;
+    background-image: url('../css/image/pexels-designecologist-1779487.jpg');
+    background-size: cover;
+    min-height: 60vh;
+}
+
+p {
+    color: red;
+}

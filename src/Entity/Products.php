@@ -27,8 +27,8 @@ class Products
     #[Assert\Length(
         min: 5,
         max:200,
-        minMessage:'Le titr oit faie au moins {{ limit }} caractères',
-        maxMessage:'Le titre ne oit pas faire plus de {{ limit }} caractères '
+        minMessage:'Le titre doit faire au moins {{ limit }} caractères',
+        maxMessage:'Le titre ne doit pas faire plus de {{ limit }} caractères '
     )]
     private ?string $name = null;
 

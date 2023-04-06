@@ -12,9 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/panier', name:'panier_')]
 class PanierController extends AbstractController
-{
+{ 
     #[Route('/', name: 'index')]
-    public function index(SessionInterface $session, ProductsRepository $productsRepository): Response
+    public function index(SessionInterface $session, ProductsRepository $productsRepository, $stripeSK): Response
     {
         // on recupère la session
         $panier = $session->get('panier', []);
@@ -97,7 +97,4 @@ class PanierController extends AbstractController
         
         return $this->redirectToRoute('panier_index');
     }
-
-
-
 }
